@@ -55,18 +55,24 @@ services:
   frontend1:
     build:
       context: ./mini-netumo-frontend
+      args:
+        VITE_APP_NAME: ${VITE_APP_NAME}
+        VITE_API_URL: ${VITE_API_URL}
+        VITE_WS_URL: ${VITE_WS_URL}
+        VITE_APP_ENV: ${VITE_APP_ENV}
     container_name: frontend1
-    env_file:
-      - ./docker-compose.env
     networks:
       - app
 
   frontend2:
     build:
       context: ./mini-netumo-frontend
+      args:
+        VITE_APP_NAME: ${VITE_APP_NAME}
+        VITE_API_URL: ${VITE_API_URL}
+        VITE_WS_URL: ${VITE_WS_URL}
+        VITE_APP_ENV: ${VITE_APP_ENV}
     container_name: frontend2
-    env_file:
-      - ./docker-compose.env
     networks:
       - app
 
