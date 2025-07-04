@@ -18,7 +18,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "types": ["react", "react-dom"] // Add this line
+    "types": ["react", "react-dom", "node"] // Add this line
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

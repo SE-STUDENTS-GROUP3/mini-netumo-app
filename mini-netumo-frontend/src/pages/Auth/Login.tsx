@@ -12,6 +12,15 @@ interface LoginFormData {
 }
 
 export default function Login() {
+  console.log('Env from process.env:', {
+    VITE_APP_ENV: process.env.VITE_APP_ENV,
+    VITE_API_URL: process.env.VITE_API_URL,
+    VITE_WS_URL: process.env.VITE_WS_URL,
+    VITE_APP_NAME: process.env.VITE_APP_NAME,
+    USER: process.env.USER,
+    USERNAME: process.env.USERNAME,
+  })
+
   const { login: authLogin } = useAuth()
   const navigate = useNavigate()
 
