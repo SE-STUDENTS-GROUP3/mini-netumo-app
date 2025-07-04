@@ -2,7 +2,7 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 
 const apiClient = axios.create({
-  baseURL: 'https://netumo.seranise.co.tz/api',
+  baseURL: __API_URL__,
   headers: {
     'Content-Type': 'application/json',
   },
