@@ -11,32 +11,32 @@ interface RegisterData extends LoginData {
   phoneNumber?: string // Optional
 }
 
-// ✅ LOGIN FUNCTION (Matches API: POST /api/v1/auth)
+// ✅ LOGIN FUNCTION (Matches API: POST /api/auth)
 export const login = async (data: LoginData): Promise<{ access: string; refresh: string }> => {
-  const response = await apiClient.post('/v1/auth', {
+  const response = await apiClient.post('/auth', {
     username: data.email,
     password: data.password,
   })
 
   return {
-    access: response.data.access,
-    refresh: response.data.refresh,
+    access: response.data.data.access,
+    refresh: response.data.data.refresh,
   }
 }
 
 // ✅ REGISTER FUNCTION (Adjust this to match your real /users API if needed)
 export const register = async (data: RegisterData): Promise<void> => {
-  await apiClient.post('/v1/users', {
+  await apiClient.post('/users', {
     email: data.email,
     name: data.name,
-    phoneNumber: data.phoneNumber || '+255700000000', // fallback phone
+    phoneNumber: data.phoneNumber || '+255700000000',
     password: data.password,
   })
 }
 
 // ✅ GET USER PROFILE (Workaround using decoded JWT + /users list)
 export const getProfile = async (): Promise<User> => {
-  const response = await apiClient.get('/v1/users') // or /v1/users
+  const response = await apiClient.get('/users') // or /users
   const users: User[] = response.data.data || []
 
   const token = localStorage.getItem('token')

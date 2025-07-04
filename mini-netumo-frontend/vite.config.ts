@@ -8,19 +8,6 @@ export default defineConfig(({ mode }) => {
   // Use prefix 'VITE_' so you only get VITE_* variables
   const envFromFiles = loadEnv(mode, process.cwd(), 'VITE_')
 
-  // Log env loaded from files
-  console.log('Env loaded from .env files:', envFromFiles)
-
-  // Log env from process.env (runtime environment)
-  console.log('Env from process.env:', {
-    VITE_APP_ENV: process.env.VITE_APP_ENV,
-    VITE_API_URL: process.env.VITE_API_URL,
-    VITE_WS_URL: process.env.VITE_WS_URL,
-    VITE_APP_NAME: process.env.VITE_APP_NAME,
-    USER: process.env.USER,
-    USERNAME: process.env.USERNAME,
-  })
-
   const machineUser = process.env.USER || process.env.USERNAME || os.userInfo().username
   const machineHost = os.hostname()
 

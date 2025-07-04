@@ -12,13 +12,6 @@ interface LoginFormData {
 }
 
 export default function Login() {
-  console.log('Env from injected defines:', {
-    VITE_APP_ENV: __APP_ENV__,
-    VITE_API_URL: __API_URL__,
-    VITE_WS_URL: __WS_URL__,
-    VITE_APP_NAME: __APP_NAME__,
-  })
-
   const { login: authLogin } = useAuth()
   const navigate = useNavigate()
 

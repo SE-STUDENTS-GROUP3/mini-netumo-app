@@ -1,31 +1,18 @@
 import { useQuery } from '@tanstack/react-query'
-import { fetchTargets, deleteTarget } from '@/services/targetService'
+import { fetchTargets } from '@/services/targetService'
 import TargetCard from '@/components/targets/TargetCard'
 import Button from '@/components/ui/Button'
 import { Link } from 'react-router-dom'
-import { toast } from 'react-toastify'
 
 export default function ManageTargets() {
   const {
     data: targets,
     isLoading,
     error,
-    refetch,
   } = useQuery({
     queryKey: ['targets'],
     queryFn: fetchTargets,
   })
-
-  const handleDelete = async (id: string) => {
-    try {
-      await deleteTarget(id)
-      toast.success('Target deleted successfully')
-      refetch()
-    } catch (error) {
-      toast.error('Failed to delete target')
-      console.error(error)
-    }
-  }
 
   if (isLoading) return <div className="p-4">Loading targets...</div>
   if (error) return <div className="p-4">Error loading targets</div>
@@ -49,19 +36,7 @@ export default function ManageTargets() {
           </div>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {targets?.map((target) => (
-              <div key={target.id} className="relative">
-                <TargetCard target={target} />
-                <div className="absolute top-2 right-2 space-x-2">
-                  <Button variant="danger" onClick={() => handleDelete(target.id)}>
-                    Delete
-                  </Button>
-                  <Link to={`/targets/edit/${target.id}`}>
-                    <Button variant="outline">Edit</Button>
-                  </Link>
-                </div>
-              </div>
-            ))}
+            {targets?.map((target) => <TargetCard key={target.id} target={target} />)}
           </div>
         )}
       </div>
