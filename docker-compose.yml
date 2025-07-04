@@ -56,6 +56,8 @@ services:
     build:
       context: ./mini-netumo-frontend
     container_name: frontend1
+    env_file:
+      - ./docker-compose.env
     networks:
       - app
 
@@ -63,6 +65,8 @@ services:
     build:
       context: ./mini-netumo-frontend
     container_name: frontend2
+    env_file:
+      - ./docker-compose.env
     networks:
       - app
 

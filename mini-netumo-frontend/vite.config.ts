@@ -4,7 +4,22 @@ import path from 'path'
 import os from 'os'
 
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), '')
+  // Load env vars from .env files (does NOT mutate process.env)
+  const envFromFiles = loadEnv(mode, process.cwd(), '')
+
+  // Log env loaded from files
+  console.log('Env loaded from .env files:', envFromFiles)
+
+  // Log env from process.env (runtime environment)
+  console.log('Env from process.env:', {
+    VITE_APP_ENV: process.env.VITE_APP_ENV,
+    VITE_API_URL: process.env.VITE_API_URL,
+    VITE_WS_URL: process.env.VITE_WS_URL,
+    VITE_APP_NAME: process.env.VITE_APP_NAME,
+    USER: process.env.USER,
+    USERNAME: process.env.USERNAME,
+  })
+
   const machineUser = process.env.USER || process.env.USERNAME || os.userInfo().username
   const machineHost = os.hostname()
 
@@ -19,10 +34,10 @@ export default defineConfig(({ mode }) => {
       postcss: './postcss.config.cjs',
     },
     define: {
-      __APP_ENV__: JSON.stringify(env.VITE_APP_ENV),
-      __API_URL__: JSON.stringify(env.VITE_API_URL),
-      __WS_URL__: JSON.stringify(env.VITE_WS_URL),
-      __APP_NAME__: JSON.stringify(env.VITE_APP_NAME),
+      __APP_ENV__: JSON.stringify(process.env.VITE_APP_ENV || envFromFiles.VITE_APP_ENV),
+      __API_URL__: JSON.stringify(process.env.VITE_API_URL || envFromFiles.VITE_API_URL),
+      __WS_URL__: JSON.stringify(process.env.VITE_WS_URL || envFromFiles.VITE_WS_URL),
+      __APP_NAME__: JSON.stringify(process.env.VITE_APP_NAME || envFromFiles.VITE_APP_NAME),
       __MACHINE_USER__: JSON.stringify(machineUser),
       __MACHINE_HOST__: JSON.stringify(machineHost),
     },
@@ -33,7 +48,7 @@ export default defineConfig(({ mode }) => {
       strictPort: true,
       proxy: {
         '/api': {
-          target: env.VITE_API_URL,
+          target: process.env.VITE_API_URL || envFromFiles.VITE_API_URL,
           changeOrigin: true,
           secure: false,
           rewrite: (path) => path.replace(/^\/api/, ''),
